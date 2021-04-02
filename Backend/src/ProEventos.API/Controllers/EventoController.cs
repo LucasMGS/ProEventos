@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using ProEventos.API.Data;
 
 namespace ProEventos.API.Controllers
 {
@@ -11,47 +13,39 @@ namespace ProEventos.API.Controllers
      [Route("[controller]")]
      public class EventoController : ControllerBase
      {
-         public IEnumerable<Evento> _evento = new Evento[]{
-             new Evento(){
-                 EventoId = 1,
-                 ImageURL = "photo.png",
-                 DataEvento = DateTime.Now.AddDays(2).ToString("dd/MM/yyyy"),
-                 Local = "Goiânia",
-                 Lote = "1º Lote",
-                 QtdPessoa = 5,
-                 Tema = "Angular 11 e .NET 5",
-             },
-             new Evento(){
-                 EventoId = 2,
-                 Tema = "Angular 11 e suas novidades",
-                 ImageURL = "photo1.png",
-                 DataEvento = DateTime.Now.AddDays(3).ToString("dd/MM/yyyy"),
-                 Local = "São paulo",
-                 Lote = "2º Lote",
-                 QtdPessoa = 5,
-             },
+          private readonly DataContext _context;
 
-         };
-          [HttpGet("{id}")]
-          public IEnumerable<Evento> Get(int id)
+          public EventoController(DataContext context)
           {
-            return _evento.Where(evento => evento.EventoId == id);
+            _context = context;
+          }
+
+          [HttpGet()]
+          public IEnumerable<Evento> Get()
+          {
+               return _context.Eventos;
+          }
+
+          [HttpGet("{id}")]
+          public Evento Get(int id)
+          {
+               return _context.Eventos.FirstOrDefault(evento => evento.EventoId == id);
           }
           [HttpPost]
           public IEnumerable<Evento> Post()
           {
-            return _evento;
+               return _context.Eventos;
           }
           [HttpPut("{id}")]
           public IEnumerable<Evento> Put(int id)
           {
-            return _evento;
+               return _context.Eventos;
           }
           [HttpDelete("{id}")]
           public IEnumerable<Evento> Delete(int id)
           {
-            return _evento;
+               return _context.Eventos;
           }
-          
+
      }
 }
