@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,7 @@ namespace ProEventos.API
                     x => x.SerializerSettings.ReferenceLoopHandling = 
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore
                     );
+               services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
                services.AddScoped<IEventoService,EventoService>();
                services.AddScoped<IGeralPersistence,GeralPersistence>();
                services.AddScoped<IEventoPersistence,EventoPersistence>();
@@ -53,13 +55,9 @@ namespace ProEventos.API
                }
 
                app.UseHttpsRedirection();
-
                app.UseRouting();
-
                app.UseAuthorization();
-
                app.UseCors(cors => cors.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
-
                app.UseEndpoints(endpoints =>
                {
                     endpoints.MapControllers();
