@@ -3,42 +3,76 @@
 	<div class="col-md-6 d-none d-md-block" style="height: 450px;">
 		<div class="text-center col-md-12 my-auto side-heder">
 			<h1>Cadastro de Usuário</h1>
-			<img src="../../../../assets/registerImage.png" class="my-4" alt="" width="400px">
+			<!-- <img src="../../../../assets/registerImage.png" class="my-4" alt="" width="400px"> -->
 		</div>
 	</div>
 
 	<div class="col-md-6">
 
-		<form class="p-1">
+		<form class="p-1" [formGroup]="formGroup">
       <div class="pb-2 d-block d-md-none">
         <h3 class="border-bottom">Cadastro de Usuário</h3>
       </div>
       <div class="form-row">
         <div class="form-group col-sm-6">
           <label>Primeiro Nome</label>
-          <input type="text" class="form-control" placeholder="Insira o Primeiro nome" />
+          <input type="text" class="form-control" formControlName="primeiroNome" placeholder="Insira o Primeiro nome"
+          [ngClass]="{'is-invalid': form.primeiroNome.errors && form.primeiroNome.touched}">
+          <div class="invalid-feedback">
+            Nome é obrigatório
+          </div>
         </div>
         <div class="form-group col-sm-6">
           <label>Último nome</label>
-          <input type="text" class="form-control" placeholder="Insira o Último nome" />
+          <input type="text" class="form-control" formControlName="ultimoNome" placeholder="Insira o Último nome"
+          [ngClass]="{'is-invalid': form.ultimoNome.errors && form.ultimoNome.touched}">
+
+          <div class="invalid-feedback">
+            Último nome é obrigatório
+          </div>
         </div>
       </div>
       <div class="form-group">
-        <label for="">Email:</label>
-        <input class="form-control" type="text" placeholder="Insira o Nome Completo" />
+        <label>Email:</label>
+        <input class="form-control" formControlName="email" type="text" placeholder="Seu e-mail"
+        [ngClass]="{'is-invalid': form.email.errors && form.email.touched}">
+        <div *ngIf="form.email.errors?.required" class="invalid-feedback">
+          E-mail é obrigatório
+        </div>
+        <div *ngIf="form.email.errors?.email" class="invalid-feedback">
+          Digite um e-mail válido
+        </div>
       </div>
       <div class="form-group">
-        <label for="">Usuario:</label>
-        <input class="form-control" type="text" placeholder="Insira o nome de Usuário" />
+        <label>Usuario:</label>
+        <input class="form-control" formControlName="userName" type="text" placeholder="Insira o nome de Usuário"
+        [ngClass]="{'is-invalid': form.userName.errors && form.userName.touched}">
+        <div class="invalid-feedback">
+          Usuario é obrigatório
+        </div>
       </div>
       <div class="form-row">
         <div class="form-group col-sm-6">
-          <label for="">Senha:</label>
-          <input class="form-control" type="password" placeholder="Digite uma Senha" />
+          <label>Senha:</label>
+          <input class="form-control" formControlName="senha" type="password" placeholder="Digite uma Senha"
+          [ngClass]="{'is-invalid': form.senha.errors && form.senha.touched}">
+          <div *ngIf="form.senha.errors?.required" class="invalid-feedback">
+            Senha é obrigatório
+          </div>
+          <div *ngIf="form.senha.errors?.minlength" class="invalid-feedback">
+            Sua senha deve ter no mínimo 6 caracteres
+          </div>
         </div>
         <div class="form-group col-sm-6">
-          <label for="">Confirmar Senha:</label>
-          <input class="form-control" type="password" placeholder="Confirme a Senha" />
+          <label>Confirmar senha:</label>
+          <input class="form-control" type="password" formControlName="confirmeSenha" placeholder="Confirme a Senha"
+          [ngClass]="{'is-invalid': form.confirmeSenha.errors && form.confirmeSenha.touched}">
+          <div *ngIf="form.confirmeSenha.errors?.required" class="invalid-feedback">
+            Confirmar senha é obrigatório
+          </div>
+          <div *ngIf="form.confirmeSenha.errors?.mustMatch" class="invalid-feedback">
+            As senhas devem ser iguais
+          </div>
         </div>
       </div>
       <div class="form-row p-1 mb-3">
