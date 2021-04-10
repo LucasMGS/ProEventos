@@ -44,7 +44,7 @@
       </tr>
     </thead>
     <tbody *ngIf="eventosFiltrados && eventosFiltrados.length">
-      <tr *ngFor="let evento of eventosFiltrados" (click)="detalheEvento(evento.id)"
+      <tr *ngFor="let evento of eventosFiltrados" (click)="goTodetalheEvento(evento.id)"
       style="cursor: pointer;">
         <td class="d-none d-md-table-cell">
           <img
@@ -60,10 +60,10 @@
         <td class="d-none d-md-table-cell">{{ evento.local }}</td>
         <td>{{ evento.dataEvento | DateTimeFormat }}</td>
         <td class="d-none d-md-table-cell">{{ evento.qtdPessoa }}</td>
-        <td class="d-none d-md-table-cell">{{ evento.lotes[0].nome }}</td>
+        <td class="d-none d-md-table-cell">{{ evento.lotes[0]?.nome | uppercase}}</td>
         <td>
           <button type="button" class="btn btn-danger btn-lg"
-          tooltip="Deletar" (click)="openModal(template)">
+          tooltip="Deletar" (click)="openModal($event, template,evento.tema,evento.id)">
             <i class="fa fa-trash"></i>
           </button>
         </td>
@@ -81,7 +81,7 @@
 
 <ng-template #template>
   <div class="modal-body text-center">
-    <p>Tem certeza que deseja deletar este evento?</p>
+    <p>Tem certeza que deseja deletar o evento "{{temaEvento}}" de código "{{eventoId}}"?</p>
     <button type="button" class="btn btn-default" (click)="confirm()">
       Sim
     </button>
